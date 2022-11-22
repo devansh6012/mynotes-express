@@ -1,0 +1,41 @@
+<%- include('partials/header') %>
+
+    <h1>Publish your Notes</h1>
+
+    <a class="btn btn-light btn-lg" href="/logout" role="button">Log Out</a>
+
+    <form action="/mynotes" method="POST" >
+        <div class="mb-3">
+            <label for="exampleInputText1" class="form-label">Title</label>
+            <input type="text" class="form-control" id="exampleInputText1" aria-describedby="emailHelp" name="title">
+        </div>
+        <div class="mb-3">
+            <label for="exampleFormControlTextarea1" class="form-label">Content</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="content"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Publish</button>
+    </form>
+
+    <h1>My Notes</h1>
+
+    <% notes.forEach(function(note){ %>
+
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title"><%= note.title %></h5>
+                <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                <p class="card-text"><%= note.content %></p>
+                <a href="/edit/<%= note._id %>" class="card-link">Edit</a>
+
+                <form action="/delete" method="post" id="<%= note._id %>">
+                    <a value="<%= note._id %>" onclick="if(confirm('Do you want to delete this note'))document.getElementById('<%= note._id %>').submit();" class="card-link" name="deleteNote">Delete</a>
+                    <input type="hidden" name="noteId" value="<%= note._id %>"></input>
+                </form>
+
+            </div>
+        </div>
+
+    <% }) %>
+
+
+    <%- include('partials/footer') %>
